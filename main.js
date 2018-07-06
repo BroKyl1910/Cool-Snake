@@ -6,6 +6,7 @@ var snake = [];
 var direction;
 var food;
 var ignoreInput;
+var score = 0;
 
 function setup() {
 	frameRate(15);
@@ -62,8 +63,15 @@ function ateFood() {
 }
 
 function draw() {
-	if(gameOver()) return;
+	if(gameOver()) {
+		textSize(32);
+		text('Game Over', 117, 200);
+		fill(255, 0, 0);
+		return;
+	}
+		
 	background(0);
+	fill(255);
 	rect(food.x, food.y, 10, 10);
 	snake.forEach(block => {
 		rect(block.x, block.y, 10, 10);
@@ -75,8 +83,10 @@ function draw() {
 		var head = snake[snake.length - 1];
 		var block = createVector(head.x + direction.x * 10, head.y + direction.y * 10);
 		snake.push(block);
+		score++;
 		makeFood();
 	}
+	drawScore();
 	ignoreInput = false;
 }
 function gameOver(){
@@ -84,4 +94,10 @@ function gameOver(){
 }
 function snakeOutOfBounds(){
 	return snake[0].x >= canvas.width || snake[0].x<0 || snake[0].y >= canvas.height || snake[0].y<0;
+}
+function drawScore(){
+	fill(0, 255, 0);
+	textSize(18);
+	text('Score: '+score, 20, 20);
+	fill(255);
 }
