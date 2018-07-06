@@ -22,7 +22,7 @@ function makeFood() {
 		food = p5.Vector.random2D().mult(400);
 		food.x = Math.floor(abs(food.x) / 10) * 10;
 		food.y = Math.floor(abs(food.y) / 10) * 10;
-	} while (snake.some(block => block.x == food.x && block.y == food.y ))
+	} while (snake.some(block => block.x == food.x && block.y == food.y ) || food.x==0 || food.x==canvas.width || food.y==0 || food.y==canvas.height)
 }
 
 function keyPressed() {
@@ -62,10 +62,9 @@ function ateFood() {
 }
 
 function draw() {
+	if(gameOver()) return;
 	background(0);
-	
 	rect(food.x, food.y, 10, 10);
-	
 	snake.forEach(block => {
 		rect(block.x, block.y, 10, 10);
 	});
@@ -79,4 +78,10 @@ function draw() {
 		makeFood();
 	}
 	ignoreInput = false;
+}
+function gameOver(){
+	if(snakeOutOfBounds()) return true;
+}
+function snakeOutOfBounds(){
+	return snake[0].x >= canvas.width || snake[0].x<0 || snake[0].y >= canvas.height || snake[0].y<0;
 }
