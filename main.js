@@ -65,8 +65,8 @@ function ateFood() {
 function draw() {
 	if(gameOver()) {
 		textSize(32);
-		text('Game Over', 117, 200);
 		fill(255, 0, 0);
+		text('Game Over', 117, 200);
 		return;
 	}
 		
@@ -96,8 +96,9 @@ function snakeOutOfBounds(){
 	return snake[0].x >= canvas.width || snake[0].x<0 || snake[0].y >= canvas.height || snake[0].y<0;
 }
 function drawScore(){
+	push();
 	fill(0, 255, 0);
 	textSize(18);
 	text('Score: '+score, 20, 20);
-	fill(255);
+	pop();
 }
