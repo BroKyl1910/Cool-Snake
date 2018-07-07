@@ -17,6 +17,8 @@ function setup() {
 	ignoreInput = false;
 	snake.push(createVector(200, 200));
 	score = 0;
+	loop();
+	console.log("loop");
 }
 
 function moveFood() {
@@ -28,6 +30,10 @@ function moveFood() {
 }
 
 function keyPressed() {
+	if (keyCode == 82) {
+		setup();
+		return;
+	}
 	if (ignoreInput) return;
 	if (keyCode == LEFT_ARROW && direction.x != 1) {
 		direction = createVector(-1, 0);
@@ -40,9 +46,6 @@ function keyPressed() {
 	}
 	else if (keyCode == DOWN_ARROW && direction.y != -1) {
 		direction = createVector(0, 1);
-	}
-	if (keyCode == 82) {
-		setup();
 	}
 
 	ignoreInput = true;	/* we have to wait until next frame rate to be . */
@@ -123,7 +126,7 @@ function gameOver(reason){
 	fill(0, 255, 0);
 	textSize(18);
 	text("Press R to restart", 120, 255);
-	exit(); 
+	noLoop();
 }
 function snakeOutOfBounds(){
 	return  snake[0].x >= width || snake[0].x<0 || snake[0].y >= height || snake[0].y<0;
