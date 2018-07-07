@@ -57,19 +57,24 @@ function update(){
 	drawFood();
 	drawSnake();
 	moveSnake();
+	checkGameStatus();
+	checkIfAteFood();
+	drawScore();
+	ignoreInput = false;		
+}
+function checkGameStatus(){
 	if(snakeOutOfBounds()){
 		gameOver('Out Of Bounds');
 	} else if(snakeTouchingItself()){
 		gameOver('Snake Touched Itself');
 	}
+}
+function checkIfAteFood(){
 	if (ateFood()) {
 		addBlockToSnake();
 		score++;
 		moveFood();
 	}
-	drawScore();
-	
-	ignoreInput = false;		
 }
 function moveSnake() {
 /**
