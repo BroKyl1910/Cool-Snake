@@ -120,6 +120,9 @@ function gameOver(reason){
 	text('Game Over', 117, 200);
 	textSize(24);
 	text(reason, 117, 232);
+	fill(0, 255, 0);
+	textSize(18);
+	text("Press R to restart", 120, 255);
 	exit(); 
 }
 function snakeOutOfBounds(){
