@@ -6,7 +6,7 @@ var snake = [];
 var direction;
 var food;
 var ignoreInput;
-var score = 0;
+var score;
 
 function setup() {
 	frameRate(15);
@@ -54,12 +54,12 @@ function draw() {
 }
 
 function update(){
+	drawScore();
 	drawFood();
 	drawSnake();
 	moveSnake();
 	checkGameStatus();
 	checkIfAteFood();
-	drawScore();
 	ignoreInput = false;		
 }
 function checkGameStatus(){
