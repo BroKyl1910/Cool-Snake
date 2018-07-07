@@ -2,7 +2,7 @@
 * A simple snake game.
 */
 
-var snake = [];
+var snake;
 var direction;
 var food;
 var ignoreInput;
@@ -11,6 +11,7 @@ var score;
 function setup() {
 	frameRate(15);
 	createCanvas(400, 400);
+	snake = [];
 	direction = createVector(0, 0);
 	moveFood();
 	ignoreInput = false;
@@ -40,8 +41,12 @@ function keyPressed() {
 	else if (keyCode == DOWN_ARROW && direction.y != -1) {
 		direction = createVector(0, 1);
 	}
+	if (keyCode == 82) {
+		setup();
+	}
+
 	ignoreInput = true;	/* we have to wait until next frame rate to be . */
-}
+}	
 
 function ateFood() {
 	return food.x === snake[0].x && food.y === snake[0].y;
