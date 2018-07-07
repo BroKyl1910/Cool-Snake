@@ -1,12 +1,14 @@
 /**
 * A simple snake game.
 */
-
+//TODO snkae touching itself does not show reason when using controller, make sure that full snake is shown when it hits the side
 var snake;
 var direction;
 var food;
 var ignoreInput;
 var score;
+var speed= 1;
+var gamePadConnected;
 
 function setup() {
 	// checkGamepad();
@@ -20,6 +22,7 @@ function setup() {
 	score = 0;
 	loop();
 	console.log("loop");
+	gamePadConnected = false;
 }
 
 function moveFood() {
@@ -35,7 +38,9 @@ function keyPressed() {
 		setup();
 		return;
 	}
+
 	if (ignoreInput) return;
+
 	if (keyCode == LEFT_ARROW) {
 		moveLeft();
 	}
@@ -48,28 +53,31 @@ function keyPressed() {
 	else if (keyCode == DOWN_ARROW) {
 		moveDown();
 	}
-
-	ignoreInput = true;	/* we have to wait until next frame rate to be . */
+	event.preventDefault();
 }	
 
 function moveLeft(){
 	if(direction.x!=1){
-		direction = createVector(-1, 0);	
+		direction = createVector(speed * -1 , 0);	
+		ignoreInput = true;	/* we have to wait until next frame rate to be . */
 	}
 }
 function moveRight(){
 	if(direction.x!=-1){
-		direction = createVector(1, 0);
+		direction = createVector(speed, 0);
+		ignoreInput = true;	/* we have to wait until next frame rate to be . */
 	}
 }
 function moveUp(){
-	if(direction.y!=-1){
-		direction = createVector(0, -1);
+	if(direction.y!=1){
+		direction = createVector(0, speed * -1);
+		ignoreInput = true;	/* we have to wait until next frame rate to be . */
 	}
 }
 function moveDown(){
-	if(direction.y != 1){
-		direction = createVector(0, 1);
+	if(direction.y != -1){
+		direction = createVector(0, speed);
+		ignoreInput = true;	/* we have to wait until next frame rate to be . */
 	}
 }
 
@@ -181,6 +189,7 @@ var statusLabel = document.getElementById("gamepad_status");
 function checkGamepad() {
 	var gp = navigator.getGamepads()[0];
 	if(gp!=null){
+		gamePadConnected = true;
 		statusLabel.innerHTML = 'Gamepad Connected!';
 		var buttons = gp.buttons;
 		for (var i = 0; i < buttons.length; i++) {
@@ -195,6 +204,20 @@ function checkGamepad() {
 			}
 		};
 	} else{
-		statusLabel.innerHTML = 'Gamepad Connected!';
+		statusLabel.innerHTML = 'Gamepad Not Connected';
 	}
 }
+
+// function checkGamepad() {
+// 	var gp = navigator.getGamepads()[0];
+// 	if(gp!=null){
+// 		statusLabel.innerHTML = 'Gamepad Connected!';
+// 		var buttons = gp.buttons;
+// 		for (var i = 0; i < buttons.length; i++) {
+// 			console.log('Gamepad['+i+']');
+// 			console.log(buttons[i]);
+// 		};
+// 	} else{
+// 		statusLabel.innerHTML = 'Gamepad Not Connected';
+// 	}
+// }
