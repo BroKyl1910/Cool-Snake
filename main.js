@@ -177,10 +177,11 @@ function drawScore(){
 // LEFT = 14
 // RIGHT = 15
 
-
+var statusLabel = document.getElementById("gamepad_status");
 function checkGamepad() {
 	var gp = navigator.getGamepads()[0];
 	if(gp!=null){
+		statusLabel.innerHTML = 'Gamepad Connected!';
 		var buttons = gp.buttons;
 		for (var i = 0; i < buttons.length; i++) {
 			if(buttons[12].pressed){
@@ -193,5 +194,7 @@ function checkGamepad() {
 				moveRight();
 			}
 		};
+	} else{
+		statusLabel.innerHTML = 'Gamepad Connected!';
 	}
 }
