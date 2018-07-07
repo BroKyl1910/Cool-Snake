@@ -9,6 +9,7 @@ var ignoreInput;
 var score;
 
 function setup() {
+	// checkGamepad();
 	frameRate(15);
 	createCanvas(400, 400);
 	snake = [];
@@ -35,21 +36,42 @@ function keyPressed() {
 		return;
 	}
 	if (ignoreInput) return;
-	if (keyCode == LEFT_ARROW && direction.x != 1) {
-		direction = createVector(-1, 0);
+	if (keyCode == LEFT_ARROW) {
+		moveLeft();
 	}
-	else if (keyCode == RIGHT_ARROW && direction.x != -1) {
-		direction = createVector(1, 0);
+	else if (keyCode == RIGHT_ARROW) {
+		moveRight();
 	}
-	else if (keyCode == UP_ARROW&& direction.y != 1) {
-		direction = createVector(0, -1);
+	else if (keyCode == UP_ARROW) {
+		moveUp();
 	}
-	else if (keyCode == DOWN_ARROW && direction.y != -1) {
-		direction = createVector(0, 1);
+	else if (keyCode == DOWN_ARROW) {
+		moveDown();
 	}
 
 	ignoreInput = true;	/* we have to wait until next frame rate to be . */
 }	
+
+function moveLeft(){
+	if(direction.x!=1){
+		direction = createVector(-1, 0);	
+	}
+}
+function moveRight(){
+	if(direction.x!=-1){
+		direction = createVector(1, 0);
+	}
+}
+function moveUp(){
+	if(direction.y!=-1){
+		direction = createVector(0, -1);
+	}
+}
+function moveDown(){
+	if(direction.y != 1){
+		direction = createVector(0, 1);
+	}
+}
 
 function ateFood() {
 	return food.x === snake[0].x && food.y === snake[0].y;
@@ -62,6 +84,7 @@ function draw() {
 }
 
 function update(){
+	checkGamepad();
 	drawScore();
 	drawFood();
 	drawSnake();
@@ -144,4 +167,31 @@ function drawScore(){
 	fill(0, 255, 0);
 	textSize(18);
 	text('Score: '+score, 20, 20);
+}
+
+
+
+
+//UP = 12
+// DOWN = 13
+// LEFT = 14
+// RIGHT = 15
+
+
+function checkGamepad() {
+	var gp = navigator.getGamepads()[0];
+	if(gp!=null){
+		var buttons = gp.buttons;
+		for (var i = 0; i < buttons.length; i++) {
+			if(buttons[12].pressed){
+				moveUp();
+			} else if(buttons[13].pressed){
+				moveDown();
+			} else if(buttons[14].pressed){
+				moveLeft();
+			} else if(buttons[15].pressed){
+				moveRight();
+			}
+		};
+	}
 }
