@@ -23,7 +23,7 @@ function moveFood() {
 		food = p5.Vector.random2D().mult(400);
 		food.x = Math.floor(abs(food.x) / 10) * 10;
 		food.y = Math.floor(abs(food.y) / 10) * 10;
-	} while (snake.some(block => block.x == food.x && block.y == food.y ) || food.x<=10 || food.x>=canvas.width-10 || food.y<=10 || food.y>=canvas.height-10);
+	} while (snake.some(block => block.x == food.x && block.y == food.y ) || food.x<=10 || food.x>=width-10 || food.y<=10 || food.y>=height-10);
 }
 
 function keyPressed() {
@@ -55,17 +55,20 @@ function draw() {
 
 function update(){
 	drawFood();
+	drawSnake();
 	moveSnake();
+	if(snakeOutOfBounds()){
+		gameOver('Out Of Bounds');
+	} else if(snakeTouchingItself()){
+		gameOver('Snake Touched Itself');
+	}
 	if (ateFood()) {
 		addBlockToSnake();
 		score++;
 		moveFood();
 	}
-	drawSnake();
 	drawScore();
-	if(snakeOutOfBounds){
-		gameOver();
-	}
+	
 	ignoreInput = false;		
 }
 function moveSnake() {
@@ -101,22 +104,25 @@ function addBlockToSnake(){
 }
 
 
-function gameOver(){
+function gameOver(reason){
 	textSize(32);
 	fill(255, 0, 0);
 	text('Game Over', 117, 200);
-	window.stop();
+	textSize(24);
+	text(reason, 117, 232);
+	exit(); 
 }
 function snakeOutOfBounds(){
-	return  snake[0].x >= canvas.width || snake[0].x<0 || snake[0].y >= canvas.height || snake[0].y<0;
+	return  snake[0].x >= width || snake[0].x<0 || snake[0].y >= height || snake[0].y<0;
 }
 function snakeTouchingItself(){
 	for (var i = 1; i < snake.length; i++) {
-		if(snake[i].x === snake[0].x && snake[i].y === snake[0].y){
+		if(snake[i].x==snake[0].x && snake[i].y==snake[0].y){
 			return true;
 		}
 	}
 	return false;
+	
 }
 function drawScore(){
 	fill(0, 255, 0);
