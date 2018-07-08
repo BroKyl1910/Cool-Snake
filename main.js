@@ -43,7 +43,7 @@ function update(){
 }
 function moveFood() {
 	do {
-		food = p5.Vector.random2D().mult(400);
+		food = createVector(random(0, width), random(0, height));
 		food.x = Math.floor(abs(food.x) / 10) * 10;
 		food.y = Math.floor(abs(food.y) / 10) * 10;
 	} while (snake.some(block => block.x == food.x && block.y == food.y ) || food.x<=10 || food.x>=width-10 || food.y<=10 || food.y>=height-10);
