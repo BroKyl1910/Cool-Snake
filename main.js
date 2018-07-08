@@ -34,9 +34,10 @@ function draw() {
 
 function update(){
 	checkGamepad();
-	drawScore();
+	
 	drawFood();
 	drawSnake();
+	drawScore();
 	if(!paused){
 		moveSnake();
 		checkGameStatus();
@@ -86,7 +87,7 @@ function keyPressed() {
 			moveDown();
 		}
 	}
-	if(keyCode == 80){
+	if(keyCode == 32){
 		togglePause();
 	}
 	ignoreInput = true;
