@@ -26,6 +26,7 @@ function setup() {
 	gamePadConnected = false;
 }
 function draw() {
+	noCursor();
 	fill(0);
 	background(0);
 	update();
