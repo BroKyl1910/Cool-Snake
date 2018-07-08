@@ -219,18 +219,15 @@ function checkGamepad() {
 					moveRight();
 				}
 			}
-			if(buttons[9].pressed){
-				togglePause();
-			}
 		};
 	} else{
 		statusLabel.innerHTML = 'Gamepad Not Connected';
 		infoLabel.innerHTML = 'If gamepad is connected but not being recognised, press any button on gamepad';
 	}
 }
-
 function togglePause(){
 	paused = !paused;
+
 	if(paused){
 		drawPaused();
 	}
