@@ -74,31 +74,28 @@ function keyPressed() {
 	else if (keyCode == DOWN_ARROW || keyCode == 83) {
 		event.preventDefault();
 		moveDown();
-	}
+	} 
+	ignoreInput = true;
 }	
 
 function moveLeft(){
 	if(direction.x!=1){
 		direction = createVector(speed * -1 , 0);	
-		ignoreInput = true;	/* we have to wait until next frame to move again . */
 	}
 }
 function moveRight(){
 	if(direction.x!=-1){
 		direction = createVector(speed, 0);
-		ignoreInput = true;	/* we have to wait until next frame to move again . */
 	}
 }
 function moveUp(){
 	if(direction.y!=1){
 		direction = createVector(0, speed * -1);
-		ignoreInput = true;	/* we have to wait until next frame to move again . */
 	}
 }
 function moveDown(){
 	if(direction.y != -1){
 		direction = createVector(0, speed);
-		ignoreInput = true;	/* we have to wait until next frame to move again . */
 	}
 }
 
