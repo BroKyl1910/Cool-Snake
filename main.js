@@ -8,7 +8,6 @@ var food;
 var ignoreInput;
 var score;
 var speed= 1;
-var gamePadConnected;
 var paused;
 
 function setup() {
@@ -22,7 +21,6 @@ function setup() {
 	score = 0;
 	loop();
 	console.log("loop");
-	gamePadConnected = false;
 	paused = false;
 }
 function draw() {
@@ -204,7 +202,6 @@ var infoLabel = document.getElementById("connected_not_recognised_info");
 function checkGamepad() {
 	var gp = navigator.getGamepads()[0];
 	if(gp!=null){
-		gamePadConnected = true;
 		statusLabel.innerHTML = 'Gamepad Connected!';
 		infoLabel.innerHTML = '';
 		var buttons = gp.buttons;
