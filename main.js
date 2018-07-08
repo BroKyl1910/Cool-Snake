@@ -9,12 +9,11 @@ var ignoreInput;
 var score;
 var speed= 1;
 var gamePadConnected;
+var paused;
 
 function setup() {
-	// checkGamepad();
 	frameRate(15);
 	createCanvas(400, 400);
-	// loadHighScore();
 	snake = [];
 	direction = createVector(0, 0);
 	moveFood();
@@ -24,6 +23,7 @@ function setup() {
 	loop();
 	console.log("loop");
 	gamePadConnected = false;
+	paused = false;
 }
 function draw() {
 	noCursor();
@@ -37,11 +37,21 @@ function update(){
 	drawScore();
 	drawFood();
 	drawSnake();
-	moveSnake();
-	checkGameStatus();
-	checkIfAteFood();
-	ignoreInput = false;		
+	if(!paused){
+		moveSnake();
+		checkGameStatus();
+		checkIfAteFood();		
+	} else{
+		drawPaused();
+	}
+	ignoreInput = false;
 }
+function drawPaused(){
+	textSize(32);
+	fill(255, 255, 255);
+	text('PAUSE', 150, 200);
+}
+
 function moveFood() {
 	do {
 		food = createVector(random(0, width), random(0, height));
@@ -58,23 +68,27 @@ function keyPressed() {
 	}
 
 	if (ignoreInput) return;
-
-	if (keyCode == LEFT_ARROW || keyCode == 65) {
-		event.preventDefault();
-		moveLeft();
+	if(!paused){
+		if (keyCode == LEFT_ARROW || keyCode == 65) {
+			event.preventDefault();
+			moveLeft();
+		}
+		else if (keyCode == RIGHT_ARROW || keyCode == 68) {
+			event.preventDefault();
+			moveRight();
+		}
+		else if (keyCode == UP_ARROW || keyCode == 87 ) {
+			event.preventDefault();
+			moveUp();
+		}
+		else if (keyCode == DOWN_ARROW || keyCode == 83) {
+			event.preventDefault();
+			moveDown();
+		}
 	}
-	else if (keyCode == RIGHT_ARROW || keyCode == 68) {
-		event.preventDefault();
-		moveRight();
+	if(keyCode == 80){
+		togglePause();
 	}
-	else if (keyCode == UP_ARROW || keyCode == 87 ) {
-		event.preventDefault();
-		moveUp();
-	}
-	else if (keyCode == DOWN_ARROW || keyCode == 83) {
-		event.preventDefault();
-		moveDown();
-	} 
 	ignoreInput = true;
 }	
 
@@ -194,19 +208,31 @@ function checkGamepad() {
 		infoLabel.innerHTML = '';
 		var buttons = gp.buttons;
 		for (var i = 0; i < buttons.length; i++) {
-			if(buttons[12].pressed){
-				moveUp();
-			} else if(buttons[13].pressed){
-				moveDown();
-			} else if(buttons[14].pressed){
-				moveLeft();
-			} else if(buttons[15].pressed){
-				moveRight();
+			if(!paused){
+				if(buttons[12].pressed){
+					moveUp();
+				} else if(buttons[13].pressed){
+					moveDown();
+				} else if(buttons[14].pressed){
+					moveLeft();
+				} else if(buttons[15].pressed){
+					moveRight();
+				}
+			}
+			if(buttons[9].pressed){
+				togglePause();
 			}
 		};
 	} else{
 		statusLabel.innerHTML = 'Gamepad Not Connected';
 		infoLabel.innerHTML = 'If gamepad is connected but not being recognised, press any button on gamepad';
+	}
+}
+
+function togglePause(){
+	paused = !paused;
+	if(paused){
+		drawPaused();
 	}
 }
 
