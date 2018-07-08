@@ -51,25 +51,26 @@ function moveFood() {
 
 function keyPressed() {
 	if (keyCode == 82) {
+		noCanvas();
 		setup();
 		return;
 	}
 
 	if (ignoreInput) return;
 
-	if (keyCode == LEFT_ARROW) {
+	if (keyCode == LEFT_ARROW || keyCode == 65) {
 		event.preventDefault();
 		moveLeft();
 	}
-	else if (keyCode == RIGHT_ARROW) {
+	else if (keyCode == RIGHT_ARROW || keyCode == 68) {
 		event.preventDefault();
 		moveRight();
 	}
-	else if (keyCode == UP_ARROW) {
+	else if (keyCode == UP_ARROW || keyCode == 87 ) {
 		event.preventDefault();
 		moveUp();
 	}
-	else if (keyCode == DOWN_ARROW) {
+	else if (keyCode == DOWN_ARROW || keyCode == 83) {
 		event.preventDefault();
 		moveDown();
 	}
@@ -186,11 +187,13 @@ function drawScore(){
 // LEFT = 14
 // RIGHT = 15
 var statusLabel = document.getElementById("gamepad_status");
+var infoLabel = document.getElementById("connected_not_recognised_info");
 function checkGamepad() {
 	var gp = navigator.getGamepads()[0];
 	if(gp!=null){
 		gamePadConnected = true;
 		statusLabel.innerHTML = 'Gamepad Connected!';
+		infoLabel.innerHTML = '';
 		var buttons = gp.buttons;
 		for (var i = 0; i < buttons.length; i++) {
 			if(buttons[12].pressed){
@@ -205,6 +208,7 @@ function checkGamepad() {
 		};
 	} else{
 		statusLabel.innerHTML = 'Gamepad Not Connected';
+		infoLabel.innerHTML = 'If gamepad is connected but not being recognised, press any button on gamepad';
 	}
 }
 
