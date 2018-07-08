@@ -230,8 +230,3 @@ function togglePause(){
 		drawPaused();
 	}
 }
-
-// function loadHighScore(){
-// 	var highScore = loadStrings("http://localhost:8080/highscore.txt");
-// 	console.log(highScore[0]);
-// }
