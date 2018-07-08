@@ -14,6 +14,7 @@ function setup() {
 	// checkGamepad();
 	frameRate(15);
 	createCanvas(400, 400);
+	// loadHighScore();
 	snake = [];
 	direction = createVector(0, 0);
 	moveFood();
@@ -24,7 +25,22 @@ function setup() {
 	console.log("loop");
 	gamePadConnected = false;
 }
+function draw() {
+	fill(0);
+	background(0);
+	update();
+}
 
+function update(){
+	checkGamepad();
+	drawScore();
+	drawFood();
+	drawSnake();
+	moveSnake();
+	checkGameStatus();
+	checkIfAteFood();
+	ignoreInput = false;		
+}
 function moveFood() {
 	do {
 		food = p5.Vector.random2D().mult(400);
@@ -42,18 +58,21 @@ function keyPressed() {
 	if (ignoreInput) return;
 
 	if (keyCode == LEFT_ARROW) {
+		event.preventDefault();
 		moveLeft();
 	}
 	else if (keyCode == RIGHT_ARROW) {
+		event.preventDefault();
 		moveRight();
 	}
 	else if (keyCode == UP_ARROW) {
+		event.preventDefault();
 		moveUp();
 	}
 	else if (keyCode == DOWN_ARROW) {
+		event.preventDefault();
 		moveDown();
 	}
-	event.preventDefault();
 }	
 
 function moveLeft(){
@@ -85,22 +104,6 @@ function ateFood() {
 	return food.x === snake[0].x && food.y === snake[0].y;
 }
 
-function draw() {
-	fill(0);
-	background(0);
-	update();
-}
-
-function update(){
-	checkGamepad();
-	drawScore();
-	drawFood();
-	drawSnake();
-	moveSnake();
-	checkGameStatus();
-	checkIfAteFood();
-	ignoreInput = false;		
-}
 function checkGameStatus(){
 	if(snakeOutOfBounds()){
 		gameOver('Out Of Bounds');
@@ -178,13 +181,10 @@ function drawScore(){
 }
 
 
-
-
 //UP = 12
 // DOWN = 13
 // LEFT = 14
 // RIGHT = 15
-
 var statusLabel = document.getElementById("gamepad_status");
 function checkGamepad() {
 	var gp = navigator.getGamepads()[0];
@@ -208,16 +208,7 @@ function checkGamepad() {
 	}
 }
 
-// function checkGamepad() {
-// 	var gp = navigator.getGamepads()[0];
-// 	if(gp!=null){
-// 		statusLabel.innerHTML = 'Gamepad Connected!';
-// 		var buttons = gp.buttons;
-// 		for (var i = 0; i < buttons.length; i++) {
-// 			console.log('Gamepad['+i+']');
-// 			console.log(buttons[i]);
-// 		};
-// 	} else{
-// 		statusLabel.innerHTML = 'Gamepad Not Connected';
-// 	}
+// function loadHighScore(){
+// 	var highScore = loadStrings("http://localhost:8080/highscore.txt");
+// 	console.log(highScore[0]);
 // }
